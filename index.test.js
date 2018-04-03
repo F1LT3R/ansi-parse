@@ -1,6 +1,20 @@
+import fs from 'fs'
 import chalk from 'chalk'
 import test from 'ava'
 import ansiParse from '.'
+
+const fixtures = {
+	chalkStylesAnsi: fs.readFileSync('./fixtures/fixture.chalk-styles.ansi').toString()
+}
+
+test('cover all chalk styles', t => {
+	const parsed = JSON.stringify(ansiParse(fixtures.chalkStylesAnsi))
+	const expectFile = `./fixtures/fixture.chalk-styles.ansi.expected.utf8`
+	// To output correct values to file...
+	// fs.writeFileSync(expectFile, parsed)
+	const expected = fs.readFileSync(expectFile).toString()
+	t.deepEqual(parsed, expected)
+})
 
 test('gets opening red ansi escape char', t => {
 	const text = chalk.red('_')
@@ -523,3 +537,4 @@ test('open/close the rainbow', t => {
 
 	t.deepEqual(parsed, expected)
 })
+
