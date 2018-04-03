@@ -4,7 +4,7 @@
 
 [![Build Status](https://travis-ci.org/F1LT3R/ansi-parse.svg?branch=master)](https://travis-ci.org/F1LT3R/ansi-parse)
 [![Coverage Status](https://coveralls.io/repos/github/F1LT3R/ansi-parse/badge.svg?branch=master)](https://coveralls.io/github/F1LT3R/ansi-parse?branch=master)
-[![NPM Version](https://img.shields.io/npm/v/@f1lt3r/ansi-parse)](https://www.npmjs.com/package/@f1lt3r/ansi-parse)
+[![NPM Version](https://img.shields.io/npm/v/@f1lt3r/ansi-parse.svg)](https://www.npmjs.com/package/@f1lt3r/ansi-parse)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
 
 ANSI-Parse takes an ANSI string as input:
