@@ -7,7 +7,7 @@
 [![NPM Version](https://img.shields.io/npm/v/ansi-parse.svg)](https://www.npmjs.com/package/ansi-parse)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
 
-ANSI-Parse takes ANSI strings as input:
+ANSI-Parse takes an ANSI string as input:
 
 ```plain
 const text = "🤖\u001B[31m DANGER\u001B[0m Will Robbinson"
@@ -16,14 +16,15 @@ console.log(text)
 
 ![Danger Will Robbinson](danger-will-robbinson.png)
 
-
-ANSI-Parse outputs a object representation:
+When you run your text through the ANSI-Parse...
 
 ```js
 const ansiParse = require('ansi-parse')
 const parsed = ansiParse(text)
 console.log(parsed)
 ```
+
+...ANSI-Parse outputs value, position and style data.
 
 ```js
 [{
@@ -54,13 +55,76 @@ console.log(parsed)
 }]
 ```
 
-## About Chunks
+This data can be used to convert ANSI sequences to other formatsm such as HTML, Image, SVG, etc.
 
-Each object in the output array is called a "chunk". Each chunk represents one of the following types of data.
+## Chunk
+
+Each object in the output array is called a "chunk". Each chunk represents one or more of the following data types.
 
 1. `ansi` - ANSI escape sequence
 1. `newline` - Newline character
 1. `text` - Text chunk of like-styles
+
+## Style
+
+The style object contains a list of styles associated with the current chunk. Each style represents an ANSI Escape sequence that is mapped to  friendly name called an `ANSI-Tag`.
+
+- Styles are only included in text chunks.
+- Styles that are off/closed, are not present in the style object. 
+
+The following style object describes a chunk of red text:
+
+```js
+{
+    foregroundColor: 'red'
+}
+```
+
+This object shows alls styles in combination:
+
+```js
+{
+    backgroundColor: 'bgRed',
+    foregroundColor: 'white',
+    dim: true,
+    bold: true,
+    italic: true,
+    underline: true,
+    strikethrough: true,
+    inverse: true
+}
+```
+
+Styles that are closed or reset are not included in the style object. 
+
+For example:
+
+```js
+             // Turn on Bold
+const text = '\u001b[1m BOLD' +
+    // Turn off all styles
+    '\u001b[0m NORMAL'
+`
+const parsed = ansiParse(text)
+
+const styles = parsed
+    .filter(chunk => chunk.style)
+    .map(chunk => chunk.style)
+
+console.log(styles)
+```
+
+The above code should log:
+
+```js
+[
+    // Turn on Bold
+    { bold: true },
+
+    // Turn off all styles
+    {}
+]
+```
 
 ## Position
 
@@ -79,7 +143,7 @@ The position object contains 4 kinds of position:
 
 ### Text Value
 
-The value of a `text` chunk is a JavaScript string. The value of a etxt chunk should never contain any ANSI escape sequences.
+The value of a `text` chunk is a JavaScript string. The value of a text chunk should never contain any ANSI escape sequences.
 
 ```js
 {
@@ -112,4 +176,3 @@ You can find the list ansi-tags in [types/types.ansi-seqs-to-ansi-tags.js](types
 ```
 $ yarn add ansi-parse
 ```
-

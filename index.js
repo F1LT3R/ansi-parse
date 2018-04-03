@@ -214,7 +214,7 @@ const parse = ansi => {
 
 		const chunk = bundle('ansi', {
 			tag: ansiTag,
-			ansi: JSON.stringify(word).replace(/"/g, '')
+			ansi: word
 		})
 		list.push(chunk)
 		nAnsi += word.length
