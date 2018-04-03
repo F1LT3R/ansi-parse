@@ -1,10 +1,10 @@
 # ansi-parse
 
-> Parse ansi into an array of ansi-tags and text-chunks.
+> 🤖  Parse ansi into an array of ansi-tags and text-chunks.
 
 [![Build Status](https://travis-ci.org/F1LT3R/ansi-parse.svg?branch=master)](https://travis-ci.org/F1LT3R/ansi-parse)
 [![Coverage Status](https://coveralls.io/repos/github/F1LT3R/ansi-parse/badge.svg?branch=master)](https://coveralls.io/github/F1LT3R/ansi-parse?branch=master)
-[![NPM Version](https://img.shields.io/npm/v/ansi-parse.svg)](https://www.npmjs.com/package/ansi-parse)
+[![NPM Version](https://img.shields.io/npm/v/@f1lt3r/ansi-parse)](https://www.npmjs.com/package/@f1lt3r/ansi-parse)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
 
 ANSI-Parse takes an ANSI string as input:
@@ -104,7 +104,7 @@ For example:
 const text = '\u001b[1m BOLD' +
     // Turn off all styles
     '\u001b[0m NORMAL'
-`
+
 const parsed = ansiParse(text)
 
 const styles = parsed
