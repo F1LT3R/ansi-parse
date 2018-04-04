@@ -28,6 +28,7 @@ module.exports = {
 	'\u001B[46m': 'bgCyan',
 	'\u001B[47m': 'bgWhite',
 
+	'\u001B[100m': 'bgGray',
 	'\u001B[101m': 'bgRedBright',
 	'\u001B[102m': 'bgGreenBright',
 	'\u001B[103m': 'bgYellowBright',

@@ -27,32 +27,37 @@ console.log(parsed)
 ...ANSI-Parse outputs value, position and style data.
 
 ```js
-[{
-    type: 'text',
-    value: '🤖',
-    position: {x: 0, y: 0, n: 0, raw: 0},
-    style: {}
-}, {
-    type: 'ansi',
-    value: {tag: 'red', ansi: '\u001b[31m'},
-    position: {x: 2, y: 0, n: 2, raw: 2}
-}, {
-    type: 'text',
-    value: ' DANGER',
-    position: {x: 2,y: 0,n: 2, raw: 7},
-    style: {
-        foregroundColor: 'red'
-    }
-}, {
-    type: 'ansi',
-    value: {tag: 'reset', ansi: '\u001b[0m'},
-    position: {x: 9, y: 0, n: 9, raw: 14}
-}, {
-    type: 'text',
-    value: ' Will Robbinson',
-    position: {x: 9, y: 0, n: 9, raw: 18},
-    style: {}
-}]
+{
+    raw: '🤖\u001B[31m DANGER\u001B[0m Will Robbinson',    
+    plain: '🤖 DANGER Will Robbinson',
+    textArea: {columns: 24, rows: 1},
+    chunks: [{
+        type: 'text',
+        value: '🤖',
+        position: {x: 0, y: 0, n: 0, raw: 0},
+        style: {}
+    }, {
+        type: 'ansi',
+        value: {tag: 'red', ansi: '\u001b[31m'},
+        position: {x: 2, y: 0, n: 2, raw: 2}
+    }, {
+        type: 'text',
+        value: ' DANGER',
+        position: {x: 2,y: 0,n: 2, raw: 7},
+        style: {
+            foregroundColor: 'red'
+        }
+    }, {
+        type: 'ansi',
+        value: {tag: 'reset', ansi: '\u001b[0m'},
+        position: {x: 9, y: 0, n: 9, raw: 14}
+    }, {
+        type: 'text',
+        value: ' Will Robbinson',
+        position: {x: 9, y: 0, n: 9, raw: 18},
+        style: {}
+    }]
+}
 ```
 
 This data can be used to convert ANSI sequences to other formatsm such as HTML, Image, SVG, etc.

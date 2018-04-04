@@ -1,8 +1,25 @@
 const arrayUniq = require('array-uniq')
 const ansiRegex = require('ansi-regex')
 const superSplit = require('super-split')
+const stripAnsi = require('strip-ansi')
 
 const types = require('./types')
+
+const meassureTextArea = plainText => {
+	const lines = plainText.split('\n')
+	const rows = lines.length
+
+	let columns = 0
+	lines.forEach(line => {
+		const len = line.length
+
+		if (len > columns) {
+			columns = len
+		}
+	})
+
+	return {columns, rows}
+}
 
 // Atomize
 // Splits text into "words" by sticky delimiters [ANSI Escape Seq, \n]
@@ -14,9 +31,20 @@ const atomize = text => {
 }
 
 const parse = ansi => {
-	const list = []
+	const plainText = stripAnsi(ansi)
+	const textArea = meassureTextArea(plainText)
 
-	const {ansies, words} = atomize(ansi)
+	const result = {
+		raw: ansi,
+		plainText,
+		textArea,
+		chunks: []
+	}
+
+	const {
+		ansies,
+		words
+	} = atomize(ansi)
 
 	const styleStack = {
 		foregroundColor: [],
@@ -68,7 +96,7 @@ const parse = ansi => {
 			}
 		}
 
-		if (type === 'text') {
+		if (type === 'text' || type === 'ansi') {
 			const style = {}
 
 			const foregroundColor = getForegroundColor()
@@ -118,7 +146,7 @@ const parse = ansi => {
 		// Newline character
 		if (word === '\n') {
 			const chunk = bundle('newline', '\n')
-			list.push(chunk)
+			result.chunks.push(chunk)
 
 			x = 0
 			y += 1
@@ -130,7 +158,7 @@ const parse = ansi => {
 		// Text characters
 		if (ansies.includes(word) === false) {
 			const chunk = bundle('text', word)
-			list.push(chunk)
+			result.chunks.push(chunk)
 
 			x += word.length
 			nAnsi += word.length
@@ -214,13 +242,15 @@ const parse = ansi => {
 
 		const chunk = bundle('ansi', {
 			tag: ansiTag,
-			ansi: word
+			ansi: word,
+			decorator
 		})
-		list.push(chunk)
+
+		result.chunks.push(chunk)
 		nAnsi += word.length
 	})
 
-	return list
+	return result
 }
 
 module.exports = parse
