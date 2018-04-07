@@ -3,7 +3,8 @@ const ansiRegex = require('ansi-regex')
 const superSplit = require('super-split')
 const stripAnsi = require('strip-ansi')
 
-const types = require('./types')
+const ansiTags = require('./types.ansi-seqs-to-ansi-tags')
+const decorators = require('./types.ansi-tags-to-decorator-names')
 
 const meassureTextArea = plainText => {
 	const lines = plainText.split('\n')
@@ -167,8 +168,8 @@ const parse = ansi => {
 		}
 
 		// ANSI Escape characters
-		const ansiTag = types.ansiTags[word]
-		const decorator = types.decorators[ansiTag]
+		const ansiTag = ansiTags[word]
+		const decorator = decorators[ansiTag]
 		const color = ansiTag
 
 		if (decorator === 'foregroundColorOpen') {
